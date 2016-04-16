@@ -15,7 +15,9 @@
         event = event || window.event;
         if (event.ctrlKey && event.keyCode >= 49 && event.keyCode <= 57) {
             var index = event.keyCode - 48;
-            document.querySelector('#im_dialogs > li:nth-child(' + index + ') > div').click();
+            var dialog = document.querySelector('#im_dialogs > li:nth-child(' + index + ') > div');
+            dialog.click();
+            document.getElementById('im_dialogs').scrollTop += dialog.getBoundingClientRect().top - 212; // 212 px should be enough for everyone
             return false;
         }
         return true;
