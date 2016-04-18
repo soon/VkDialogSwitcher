@@ -57,7 +57,6 @@
                 var dialog = document.querySelector('#im_dialogs > li:nth-child(' + index + ') > div');
                 dialog.click();
                 document.getElementById('im_dialogs').scrollTop += dialog.getBoundingClientRect().top - 212;
-                removeHelpers();
                 return false;
             }
         }
