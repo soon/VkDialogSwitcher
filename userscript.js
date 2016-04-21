@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VK dialogs switcher
 // @namespace    http://tampermonkey.net/
-// @version      0.1.6
+// @version      0.1.7
 // @description  Allows to switch between open dialogs using Ctrl + 1, 2 ... shortcut
 // @author       Andrew Kuchev
 // @match        https://new.vk.com/*
@@ -44,8 +44,9 @@
 
     var appendHelperToDialogNode = function(index) {
         var dialog = getDialogNode(index);
-        dialog.style.cssText = "position:relative;";
+        if (!dialog) return;
 
+        dialog.style.cssText = "position:relative;";
         var helper = createHelper(index, 20, 14);
         dialog.appendChild(helper);
     };
