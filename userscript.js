@@ -34,10 +34,10 @@
     var getDialogsSearchBox = function() {
         return document.getElementById('im_dialogs_search');
     };
-    
+
     var createHelperForSearchBox = function() {
         var searchBoxParent = getDialogsSearchBox().parentNode;
-        var helper = createHelper('F', 12, 40);
+        var helper = createHelper('F', 12, 15);
         searchBoxParent.style.cssText = "position:relative;";
         searchBoxParent.appendChild(helper);
     };
