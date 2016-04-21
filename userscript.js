@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VK dialogs switcher
 // @namespace    http://tampermonkey.net/
-// @version      0.1.5
+// @version      0.1.6
 // @description  Allows to switch between open dialogs using Ctrl + 1, 2 ... shortcut
 // @author       Andrew Kuchev
 // @match        https://new.vk.com/*
@@ -17,20 +17,36 @@
 
     var helperClassName = '_dialog-switcher-helper';
 
+    var createHelper = function(text, top, left) {
+        var helper = document.createElement("DIV");
+        helper.classList.add(helperClassName);
+        helper.textContent = text;
+        helper.style.cssText = (
+            'position: absolute;' +
+            'top: ' + top + 'px;' +
+            'left: ' + left + 'px;' +
+            'padding: 3px 3px;' +
+            'background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 247, 133)), to(rgb(255, 197, 66)));' +
+            'border: 1px solid rgb(227, 190, 35);');
+        return helper;
+    };
+
+    var getDialogsSearchBox = function() {
+        return document.getElementById('im_dialogs_search');
+    };
+    
+    var createHelperForSearchBox = function() {
+        var searchBoxParent = getDialogsSearchBox().parentNode;
+        var helper = createHelper('F', 12, 40);
+        searchBoxParent.style.cssText = "position:relative;";
+        searchBoxParent.appendChild(helper);
+    };
+
     var appendHelperToDialogNode = function(index) {
         var dialog = getDialogNode(index);
         dialog.style.cssText = "position:relative;";
 
-        var helper = document.createElement("DIV");
-        helper.classList.add(helperClassName);
-        helper.textContent = index;
-        helper.style.cssText = (
-            'position: absolute;' +
-            'top: 20px;' +
-            'left: 14px;' +
-            'padding: 2px 3px 2px 3px;' +
-            'background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 247, 133)), to(rgb(255, 197, 66)));' +
-            'border: 1px solid rgb(227, 190, 35);');
+        var helper = createHelper(index, 20, 14);
         dialog.appendChild(helper);
     };
 
@@ -38,6 +54,8 @@
         for (var i = 1; i < 10; ++i) {
             appendHelperToDialogNode(i);
         }
+
+        createHelperForSearchBox();
     };
 
     var getHelpers = function() {
@@ -68,6 +86,11 @@
                 var dialog = getDialogNode(index);
                 dialog.click();
                 document.getElementById('im_dialogs').scrollTop += dialog.getBoundingClientRect().top - 212;
+                return false;
+            }
+            if (event.keyCode == 70) {
+                getDialogsSearchBox().focus();
+                removeHelpers();
                 return false;
             }
         }
