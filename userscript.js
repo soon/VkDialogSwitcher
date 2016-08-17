@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         VK dialogs switcher
 // @namespace    http://tampermonkey.net/
-// @version      0.1.7
+// @version      0.1.8
 // @description  Allows to switch between open dialogs using Ctrl + 1, 2 ... shortcut
 // @author       Andrew Kuchev
 // @match        https://new.vk.com/*
+// @match        https://vk.com/*
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/soon/VkDialogSwitcher/master/userscript.js
 // ==/UserScript==
